@@ -3,8 +3,8 @@ package com.atguigu.gmall.ums.controller;
 import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
-import com.atguigu.gmall.ums.entity.UserEntity;
 import com.atguigu.gmall.ums.service.UserService;
+import com.atguigu.gmall.ums.entity.UserEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,29 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+
+    @GetMapping("check/{data}/{type}")
+    public ResponseVo<Boolean> checkData(@PathVariable("data")String data,@PathVariable("type")Integer type){
+        Boolean flag = this.userService.checkData(data,type);
+        return ResponseVo.ok(flag);
+    }
+
+    @GetMapping("query")
+    public ResponseVo<UserEntity> queryUser(
+            @RequestParam("loginName")String loginName,
+            @RequestParam("password")String password
+    ){
+        UserEntity userEntity = this.userService.queryUser(loginName,password);
+        return ResponseVo.ok(userEntity);
+    }
+
+    @PostMapping("register")
+    public ResponseVo<Object> register(UserEntity userEntity,@RequestParam("code")String code){
+        this.userService.register(userEntity,code);
+        return ResponseVo.ok();
+    }
+
 
     /**
      * 列表

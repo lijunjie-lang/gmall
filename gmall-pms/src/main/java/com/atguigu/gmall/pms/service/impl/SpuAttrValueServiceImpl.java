@@ -1,20 +1,24 @@
 package com.atguigu.gmall.pms.service.impl;
 
-import org.springframework.stereotype.Service;
-import java.util.Map;
+import com.atguigu.gmall.common.bean.PageParamVo;
+import com.atguigu.gmall.common.bean.PageResultVo;
+import com.atguigu.gmall.pms.entity.SpuAttrValueEntity;
+import com.atguigu.gmall.pms.mapper.SpuAttrValueMapper;
+import com.atguigu.gmall.pms.service.SpuAttrValueService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.atguigu.gmall.common.bean.PageResultVo;
-import com.atguigu.gmall.common.bean.PageParamVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.atguigu.gmall.pms.mapper.SpuAttrValueMapper;
-import com.atguigu.gmall.pms.entity.SpuAttrValueEntity;
-import com.atguigu.gmall.pms.service.SpuAttrValueService;
+import java.util.List;
 
 
 @Service("spuAttrValueService")
 public class SpuAttrValueServiceImpl extends ServiceImpl<SpuAttrValueMapper, SpuAttrValueEntity> implements SpuAttrValueService {
+
+    @Autowired
+    private SpuAttrValueMapper spuAttrValueMapper;
 
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {
@@ -24,6 +28,12 @@ public class SpuAttrValueServiceImpl extends ServiceImpl<SpuAttrValueMapper, Spu
         );
 
         return new PageResultVo(page);
+    }
+
+    @Override
+    public List<SpuAttrValueEntity> querySearchAttrValueBySpuId(Long spuId) {
+
+        return this.spuAttrValueMapper.querySearchAttrValueBySpuId(spuId);
     }
 
 }

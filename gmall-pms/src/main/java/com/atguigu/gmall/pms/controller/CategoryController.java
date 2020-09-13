@@ -29,9 +29,24 @@ public class CategoryController {
     private CategoryService categoryService;
 
 
+    @GetMapping("all/{cid}")
+    public ResponseVo<List<CategoryEntity>> queryAllCategoriesByCid3(@PathVariable("cid")Long cid){
+        List<CategoryEntity> categoryEntities = this.categoryService.queryAllCategoriesByCid3(cid);
+        return ResponseVo.ok(categoryEntities);
+    }
+
+
+    @GetMapping("subs/{pid}")
+    public ResponseVo<List<CategoryEntity>> queryCategoriesWithSubByPid(@PathVariable("pid")Long pid){
+
+        List<CategoryEntity> categoryEntities = this.categoryService.queryCategoriesWithSubByPid(pid);
+        return ResponseVo.ok(categoryEntities);
+    }
+
+
     @ApiOperation("根据父id查询分类")
     @GetMapping("parent/{parentId}")
-    public ResponseVo<List<CategoryEntity>> queryCategory(@PathVariable("parentId")Long parentId){
+    public ResponseVo<List<CategoryEntity>> queryCategoriesByPid(@PathVariable("parentId")Long parentId){
         // 构造查询条件
         QueryWrapper<CategoryEntity> wrapper = new QueryWrapper<>();
         // 如果parentId为-1，说明用户没有传该字段，查询所有
